@@ -12,3 +12,11 @@ Built with **Streamlit**, **Google Gemini API**, and **Edge-TTS/gTTS** for narra
 - 📄 Download your story as text.  
 - 🔊 Download narration as MP3.  
 - 🎨 Clean and interactive Streamlit interface.
+
+## ⚙️ Technologies Used
+
+- Streamlit -  Web app framework
+- Google Gemini API - Story & caption generation
+- Edge-TTS – Narration (Text-to-Speech)
+- gTTS – Backup TTS engine
+- PIL – Image processing
