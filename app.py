@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import streamlit_sortables as sortables
 from story_generator import (
     generate_story_from_images,
@@ -34,7 +34,6 @@ story_styles = st.sidebar.selectbox(
 )
 
 length = st.sidebar.radio("Story Length", ["Short", "Medium", "Long"])
-tone = st.sidebar.selectbox("Tone", ["Serious", "Funny", "Emotional", "Casual"])
 perspective = st.sidebar.radio("Perspective", ["First Person", "Third Person"])
 
 language = st.sidebar.selectbox(
@@ -112,7 +111,6 @@ if uploaded_images and st.button(button_text, type="primary"):
                 uploaded_images,
                 story_styles,
                 length,
-                tone,
                 perspective,
                 st.session_state.captions,
                 language,
@@ -127,7 +125,6 @@ if uploaded_images and st.button(button_text, type="primary"):
                 uploaded_images,
                 story_styles,
                 length,
-                tone,
                 perspective,
                 st.session_state.captions,
                 language,
@@ -143,7 +140,6 @@ if st.session_state.captions and st.button("🔄 Regenerate Story"):
             uploaded_images,
             story_styles,
             length,
-            tone,
             perspective,
             st.session_state.captions,
             language,
