@@ -6,6 +6,7 @@ from PIL import Image
 from gtts import gTTS
 import edge_tts
 import asyncio
+import tempfile
 
 # ---------------------------
 # API Setup
@@ -56,9 +57,9 @@ def extract_captions_from_images(images):
         return [f"Image {i+1}: (captioning failed: {str(e)})" for i in range(len(images))]
 
 # ---------------------------
-# Prompt Creator
+# Prompt Creator (no tone)
 # ---------------------------
-def create_advanced_prompt(style, length, tone, perspective, captions, language):
+def create_advanced_prompt(style, length, perspective, captions, language):
     length_map = {
         "Short": "2–3 paragraphs",
         "Medium": "4–6 paragraphs",
@@ -68,7 +69,7 @@ def create_advanced_prompt(style, length, tone, perspective, captions, language)
 
     base_prompt = f"""
     **Persona:** You are a creative Indian storyteller.
-    **Goal:** Write a {length.lower()} story in {perspective.lower()} perspective with a {tone.lower()} tone.
+    **Goal:** Write a {length.lower()} story in {perspective.lower()} perspective.
     **Task:** Create ONE story linking all uploaded images.
     **Style:** The story must follow the '{style}' genre.
     **Image Hints:** {', '.join(captions)}
@@ -94,11 +95,11 @@ def create_advanced_prompt(style, length, tone, perspective, captions, language)
     return base_prompt
 
 # ---------------------------
-# Story Generation
+# Story Generation (no tone)
 # ---------------------------
-def generate_story_from_images(images, style, length, tone, perspective, captions, language):
+def generate_story_from_images(images, style, length, perspective, captions, language):
     try:
-        prompt = create_advanced_prompt(style, length, tone, perspective, captions, language)
+        prompt = create_advanced_prompt(style, length, perspective, captions, language)
         model = genai.GenerativeModel("gemini-2.5-flash-lite")
         response = model.generate_content(prompt)
         return response.text
@@ -139,7 +140,6 @@ def narrate_story(story_text, voice_choice="Female"):
 
         # Run Edge-TTS to save audio
         communicate = edge_tts.Communicate(text=story_text, voice=selected_voice)
-        import asyncio
         asyncio.get_event_loop().run_until_complete(communicate.save(tmp_path))
 
         # Load into memory for Streamlit
